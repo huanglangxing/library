@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.ReaderMapper">
+
+    <!--根据id查询,返回一个Reader-->
+    <select id="queryReaderById" resultType="com.pojo.ReaderCard" parameterType="long">
+        select * from library.reader_card
+        where readerId = #{readerId}
+    </select>
+
+    <!--根据id查询,返回一个ReaderInfo-->
+    <select id="queryReaderInfoById" resultType="com.pojo.ReaderInfo" parameterType="long">
+        select * from library.reader_info
+        where readerId = #{readerId}
+    </select>
+
+    <!--根据id查询,返回一个username-->
+    <select id="queryUsernameById" resultType="string" parameterType="long">
+        select username from library.reader_card
+        where readerId = #{readerId}
+    </select>
+
+    <!--查找所有读者-->
+    <select id="queryAllReader" resultType="com.pojo.ReaderInfo">
+        select * from library.reader_info
+    </select>
+
+    <!--编辑读者-->
+    <update id="updateReader" parameterType="com.pojo.ReaderInfo">
+        update library.reader_info set name=#{name},sex=#{sex},birth=#{birth}, address=#{address},
+                                       phone=#{phone} where readerId=#{readerId}
+    </update>
+
+    <!--编辑读者卡-->
+    <update id="updateReaderCard" parameterType="com.pojo.ReaderCard">
+        update library.reader_card set username=#{username} where readerId=#{readerId}
+    </update>
+
+    <!--添加读者-->
+    <insert id="addReader" parameterType="com.pojo.ReaderInfo">
+        insert into library.reader_info values (#{readerId},#{name},#{sex},#{birth},#{address},#{phone})
+    </insert>
+
+    <!--添加读者卡-->
+    <insert id="addReaderCard" parameterType="com.pojo.ReaderCard">
+        insert into library.reader_card values (#{readerId},#{username},#{password})
+    </insert>
+
+    <!--根据id查询，删除一个reader-->
+    <delete id="deleteReaderById" parameterType="long">
+        delete  from library.reader_info where readerId=#{readerId}
+    </delete>
+
+    <!--根据id查询，删除一个readerCard-->
+    <delete id="deleteReaderCardById" parameterType="long">
+        delete  from library.reader_card where readerId=#{readerId}
+    </delete>
+
+    <!--根据id查询,返回一个password-->
+    <select id="queryPasswordById" parameterType="long" resultType="string">
+        select password from library.reader_card
+        where readerId = #{readerId}
+    </select>
+
+    <!--根据id修改password-->
+    <update id="updatePassword" >
+        update library.reader_card set password=#{newPasswd}
+        where readerId = #{readerId}
+    </update>
+</mapper>

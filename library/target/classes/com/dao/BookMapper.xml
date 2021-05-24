@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.BookMapper">
+
+    <!--返回全部书籍-->
+    <select id="queryAllBook" resultType="com.pojo.Book">
+        select * from library.book_info
+    </select>
+
+    <!--根据id查询,返回一个Book-->
+    <select id="queryBook" parameterType="long" resultType="com.pojo.Book">
+        select * from library.book_info
+        where name like '%${word}%'
+        or author like '%${word}%'
+        or introduction like '%${word}%'
+    </select>
+
+    <!--根据id删除一个Book-->
+    <select id="deleteBookById" parameterType="long">
+        delete from library.book_info
+        where bookId = #{bookId}
+    </select>
+
+    <!--根据id查找一个Book-->
+    <select id="queryBookById" parameterType="long" resultType="com.pojo.Book">
+        select * from library.book_info
+        where bookId = #{bookId}
+    </select>
+
+    <!--编辑书籍-->
+    <update id="updateBook" parameterType="com.pojo.Book">
+        update library.book_info set name=#{name},author=#{author},
+                             publish=#{publish}, ISBN=#{ISBN}, introduction=#{introduction},
+                             language=#{language}, price=#{price}, pubDate=#{pubDate},
+                             classId=#{classId}, number=#{number} where bookId=#{bookId}
+    </update>
+
+    <!--添加书籍-->
+    <insert id="addBook" parameterType="com.pojo.Book">
+        insert into library.book_info values (null,#{name},#{author},
+                                      #{publish}, #{ISBN}, #{introduction},
+                                      #{language}, #{price}, #{pubDate},
+                                      #{classId}, #{number})
+    </insert>
+</mapper>
